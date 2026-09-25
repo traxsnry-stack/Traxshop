@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Traxshop - Belanja Mudah</title>
 
   <style>
@@ -18,6 +19,7 @@
       color: #222;
     }
 
+    /* HEADER */
     header {
       background: #111;
       color: white;
@@ -36,7 +38,8 @@
       gap: 15px;
     }
 
-hhho      font-size: 25px;
+    .logo {
+      font-size: 25px;
       font-weight: bold;
     }
 
@@ -54,6 +57,11 @@ hhho      font-size: 25px;
       cursor: pointer;
     }
 
+    .login-btn:hover {
+      background: #00b873;
+    }
+
+    /* SEARCH */
     .search-box {
       max-width: 1100px;
       margin: 15px auto 0;
@@ -62,7 +70,7 @@ hhho      font-size: 25px;
     }
 
     .search-box input {
-      flex: 1;h
+      flex: 1;
       padding: 13px;
       border-radius: 8px;
       border: none;
@@ -78,6 +86,14 @@ hhho      font-size: 25px;
       cursor: pointer;
     }
 
+    /* CONTAINER */
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 15px 40px;
+    }
+
+    /* HERO */
     .hero {
       max-width: 1100px;
       margin: 25px auto;
@@ -96,12 +112,51 @@ hhho      font-size: 25px;
       color: #ccc;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0 15px 40px;
+    /* DASHBOARD */
+    .dashboard {
+      display: none;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
     }
 
+    .dashboard.active {
+      display: block;
+    }
+
+    .dashboard h2 {
+      margin-bottom: 10px;
+    }
+
+    .balance {
+      background: #111;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    .balance strong {
+      display: block;
+      font-size: 26px;
+      margin-top: 8px;
+      color: #00d084;
+    }
+
+    .logout-btn {
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 7px;
+      background: #e53935;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* PRODUCTS */
     .section-title {
       margin: 25px 0 15px;
       font-size: 22px;
@@ -158,33 +213,7 @@ hhho      font-size: 25px;
       background: #00a86b;
     }
 
-    .dashboard {
-      display: none;
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .dashboard.active {
-      display: block;
-    }
-
-    .balance {
-      background: #111;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 12px;
-    }
-
-    .balance strong {
-      display: block;
-      font-size: 26px;
-      margin-top: 8px;
-      color: #00d084;
-    }
-
+    /* MODAL LOGIN */
     .modal {
       display: none;
       position: fixed;
@@ -218,6 +247,7 @@ hhho      font-size: 25px;
       margin-bottom: 12px;
       border: 1px solid #ddd;
       border-radius: 7px;
+      outline: none;
     }
 
     .modal-box button {
@@ -230,12 +260,21 @@ hhho      font-size: 25px;
       cursor: pointer;
     }
 
+    .modal-box button:hover {
+      background: #00a86b;
+    }
+
     .close {
       background: #ddd !important;
       color: #111 !important;
       margin-top: 8px;
     }
 
+    .close:hover {
+      background: #ccc !important;
+    }
+
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 25px;
@@ -243,139 +282,645 @@ hhho      font-size: 25px;
       color: #aaa;
       margin-top: 30px;
     }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .search-box button {
+        padding: 0 12px;
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-img {
+        height: 120px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-top">
-    <div class="logo">Trax<span>shop</span></div>
+  <!-- HEADER -->
+  <header>
 
-    <button class="login-btn" onclick="openLogin()">
-      Login
-    </button>
+    <div class="header-top">
+
+      <div class="logo">
+        Trax<span>shop</span>
+      </div>
+
+      <button
+        class="login-btn"
+        id="loginButton"
+        onclick="openLogin()"
+      >
+        Login
+      </button>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Cari barang di Traxshop..."
+        onkeyup="searchProducts()"
+      >
+
+      <button onclick="searchProducts()">
+        🔎 Cari
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <h1>
+        Selamat datang di Traxshop
+      </h1>
+
+      <p>
+        Belanja mudah, cepat, dan praktis.
+      </p>
+
+    </section>
+
+
+    <!-- DASHBOARD -->
+    <section
+      id="dashboard"
+      class="dashboard"
+    >
+
+      <h2>
+        Dashboard Pelanggan
+      </h2>
+
+      <p style="margin-top:10px;">
+        Nama:
+        <strong id="customerName">
+          Pelanggan
+        </strong>
+      </p>
+
+      <p style="margin-top:6px;">
+        ID Pelanggan:
+        <strong id="customerId">
+          TRX001
+        </strong>
+      </p>
+
+      <div class="balance">
+
+        Saldo pelanggan
+
+        <strong id="customerBalance">
+          Rp 500.000
+        </strong>
+
+      </div>
+
+      <button
+        class="logout-btn"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+    <h2 class="section-title">
+      Produk Traxshop
+    </h2>
+
+
+    <section
+      class="products"
+      id="productList"
+    >
+
+      <!-- PRODUCT 1 -->
+      <div class="product">
+
+        <div class="product-img">
+          👕
+        </div>
+
+        <div class="product-info">
+
+          <div class="product-name">
+            Kaos Traxshop
+          </div>
+
+          <div class="price">
+            Rp 75.000
+          </div>
+
+          <button
+            class="buy-btn"
+            onclick="orderProduct('Kaos Traxshop', 75000)"
+          >
+            Pesan
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUCT 2 -->
+      <div class="product">
+
+        <div class="product-img">
+          👟
+        </div>
+
+        <div class="product-info">
+
+          <div class="product-name">
+            Sepatu Sport
+          </div>
+
+          <div class="price">
+            Rp 250.000
+          </div>
+
+          <button
+            class="buy-btn"
+            onclick="orderProduct('Sepatu Sport', 250000)"
+          >
+            Pesan
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUCT 3 -->
+      <div class="product">
+
+        <div class="product-img">
+          🎒
+        </div>
+
+        <div class="product-info">
+
+          <div class="product-name">
+            Tas Trax
+          </div>
+
+          <div class="price">
+            Rp 150.000
+          </div>
+
+          <button
+            class="buy-btn"
+            onclick="orderProduct('Tas Trax', 150000)"
+          >
+            Pesan
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUCT 4 -->
+      <div class="product">
+
+        <div class="product-img">
+          ⌚
+        </div>
+
+        <div class="product-info">
+
+          <div class="product-name">
+            Jam Sport
+          </div>
+
+          <div class="price">
+            Rp 120.000
+          </div>
+
+          <button
+            class="buy-btn"
+            onclick="orderProduct('Jam Sport', 120000)"
+          >
+            Pesan
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    © 2026 Traxshop — Semua hak dilindungi
+
+  </footer>
+
+
+  <!-- LOGIN MODAL -->
+  <div
+    class="modal"
+    id="loginModal"
+  >
+
+    <div class="modal-box">
+
+      <h2>
+        Login Traxshop
+      </h2>
+
+      <input
+        type="text"
+        id="loginName"
+        placeholder="Nama pelanggan"
+      >
+
+      <input
+        type="text"
+        id="loginId"
+        placeholder="ID / Nomor HP"
+      >
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Password"
+      >
+
+      <button onclick="login()">
+        Masuk
+      </button>
+
+      <button
+        class="close"
+        onclick="closeLogin()"
+      >
+        Tutup
+      </button>
+
+    </div>
+
   </div>
 
-  <div class="search-box">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Cari barang di Traxshop..."
-      onkeyup="searchProducts()"
-    >
-    <button onclick="searchProducts()">🔎 Cari</button>
-  </div>
-</header>
 
-<main class="container">
+  <!-- JAVASCRIPT -->
+  <script>
 
-  <section class="hero">
-    <h1>Selamat datang di Traxshop</h1>
-    <p>Belanja mudah, cepat, dan praktis.</p>
-  </section>
+    /*
+      DATA PELANGGAN DEMO
 
-  <section id="dashboard" class="dashboard">
-    <h2>Dashboard Pelanggan</h2>
+      ID       : TRX001
+      HP       : 081234567890
+      PASSWORD : 123456
+    */
 
-    <p style="margin-top:10px;">
-      Nama: <strong id="customerName">Pelanggan</strong>
-    </p>
+    const customer = {
 
-    <p style="margin-top:6px;">
-      ID Pelanggan: <strong id="customerId">TRX001</strong>
-    </p>
+      name: "Trax Customer",
 
-    <div class="balance">
-      Saldo pelanggan
-      <strong id="customerBalance">Rp 500.000</strong>
-    </div>
-  </section>
+      id: "TRX001",
 
-  <h2 class="section-title">Produk Traxshop</h2>
+      phone: "081234567890",
 
-  <section class="products" id="productList">
+      password: "123456",
 
-    <div class="product">
-      <div class="product-img">👕</div>
-      <div class="product-info">
-        <div class="product-name">Kaos Traxshop</div>
-        <div class="price">Rp 75.000</div>
-        <button class="buy-btn" onclick="orderProduct('Kaos Traxshop')">
-          Pesan
-        </button>
-      </div>
-    </div>
+      balance: 500000
 
-    <div class="product">
-      <div class="product-img">👟</div>
-      <div class="product-info">
-        <div class="product-name">Sepatu Sport</div>
-        <div class="price">Rp 250.000</div>
-        <button class="buy-btn" onclick="orderProduct('Sepatu Sport')">
-          Pesan
-        </button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-img">🎒</div>
-      <div class="product-info">
-        <div class="product-name">Tas Trax</div>
-        <div class="price">Rp 150.000</div>
-        <button class="buy-btn" onclick="orderProduct('Tas Trax')">
-          Pesan
-        </button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-img">⌚</div>
-      <div class="product-info">
-        <div class="product-name">Jam Sport</div>
-        <div class="price">Rp 120.000</div>
-        <button class="buy-btn" onclick="orderProduct('Jam Sport')">
-          Pesan
-        </button>
-      </div>
-    </div>
-
-  </section>
-
-</main>
-
-<footer>
-  © 2026 Traxshop — Semua hak dilindungi
-</footer>
+    };
 
 
-<!-- LOGIN MODAL -->
+    /*
+      BUKA LOGIN
+    */
 
-<div class="modal" id="loginModal">
-  <div class="modal-box">
+    function openLogin() {
 
-    <h2>Login Traxshop</h2>
+      document
+        .getElementById("loginModal")
+        .classList
+        .add("active");
 
-    <input
-      type="text"
-      id="loginName"
-      placeholder="Nama pelanggan"
-    >
+    }
 
-    <input
-      type="text"
-      id="loginId"
-      placeholder="ID / Nomor HP"
-    >
 
-    <input
-      type="password"
-      id="loginPassword"
-      placeholder="Password"
-    >
+    /*
+      TUTUP LOGIN
+    */
 
-    <button onclick="login()">
-      Masuk
-    </button>
+    function closeLogin() {
 
-    <button class="close"
+      document
+        .getElementById("loginModal")
+        .classList
+        .remove("active");
+
+    }
+
+
+    /*
+      LOGIN
+    */
+
+    function login() {
+
+      const name =
+        document
+          .getElementById("loginName")
+          .value
+          .trim();
+
+      const id =
+        document
+          .getElementById("loginId")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("loginPassword")
+          .value
+          .trim();
+
+
+      /*
+        CEK ID / NOMOR HP
+      */
+
+      if (
+        id !== customer.id &&
+        id !== customer.phone
+      ) {
+
+        alert(
+          "ID pelanggan atau nomor HP tidak ditemukan."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        CEK PASSWORD
+      */
+
+      if (
+        password !== customer.password
+      ) {
+
+        alert(
+          "Password salah."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        UPDATE DASHBOARD
+      */
+
+      document
+        .getElementById("customerName")
+        .textContent =
+          name || customer.name;
+
+
+      document
+        .getElementById("customerId")
+        .textContent =
+          customer.id;
+
+
+      document
+        .getElementById("customerBalance")
+        .textContent =
+          "Rp " +
+          customer.balance.toLocaleString("id-ID");
+
+
+      /*
+        TAMPILKAN DASHBOARD
+      */
+
+      document
+        .getElementById("dashboard")
+        .classList
+        .add("active");
+
+
+      /*
+        UBAH TOMBOL LOGIN
+      */
+
+      const loginButton =
+        document.getElementById("loginButton");
+
+      loginButton.textContent =
+        "Dashboard";
+
+
+      loginButton.onclick =
+        function() {
+
+          document
+            .getElementById("dashboard")
+            .scrollIntoView({
+              behavior: "smooth"
+            });
+
+        };
+
+
+      /*
+        TUTUP MODAL
+      */
+
+      closeLogin();
+
+
+      /*
+        BERSIHKAN FORM
+      */
+
+      document
+        .getElementById("loginName")
+        .value = "";
+
+      document
+        .getElementById("loginId")
+        .value = "";
+
+      document
+        .getElementById("loginPassword")
+        .value = "";
+
+
+      alert(
+        "Login berhasil! Selamat datang di Traxshop."
+      );
+
+    }
+
+
+    /*
+      LOGOUT
+    */
+
+    function logout() {
+
+      document
+        .getElementById("dashboard")
+        .classList
+        .remove("active");
+
+
+      const loginButton =
+        document.getElementById("loginButton");
+
+      loginButton.textContent =
+        "Login";
+
+
+      loginButton.onclick =
+        openLogin;
+
+
+      alert(
+        "Kamu sudah logout."
+      );
+
+    }
+
+
+    /*
+      PESAN PRODUK
+    */
+
+    function orderProduct(
+      productName,
+      price
+    ) {
+
+      alert(
+        "Produk: " +
+        productName +
+        "\nHarga: Rp " +
+        price.toLocaleString("id-ID") +
+        "\n\nFitur checkout akan kita buat pada tahap berikutnya."
+      );
+
+    }
+
+
+    /*
+      PENCARIAN PRODUK
+    */
+
+    function searchProducts() {
+
+      const keyword =
+        document
+          .getElementById("searchInput")
+          .value
+          .toLowerCase()
+          .trim();
+
+
+      const products =
+        document.querySelectorAll(
+          ".product"
+        );
+
+
+      products.forEach(
+        function(product) {
+
+          const name =
+            product
+              .querySelector(".product-name")
+              .textContent
+              .toLowerCase();
+
+
+          if (
+            name.includes(keyword)
+          ) {
+
+            product.style.display =
+              "";
+
+          } else {
+
+            product.style.display =
+              "none";
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /*
+      KLIK DI LUAR MODAL
+      UNTUK MENUTUP LOGIN
+    */
+
+    window.onclick =
+      function(event) {
+
+        const modal =
+          document.getElementById(
+            "loginModal"
+          );
+
+
+        if (
+          event.target === modal
+        ) {
+
+          closeLogin();
+
+        }
+
+      };
+
+  </script>
+
+</body>
+</html>
