@@ -1,1 +1,381 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TraxShop — Marketplace</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="nav"><a class="brand" href="#">Trax<span>Shop</span></a><div class="search"><input id="search" placeholder="Cari barang di TraxShop..."><button id="searchBtn">Cari</button></div><button id="ordersBtn">Pesanan</button><button id="cartBtn">🛒 <b id="cartCount">0</b></button><button id="loginBtn">Masuk</button></div></header><div class="notice">🔥 Selamat datang di TraxShop — belanja gampang, cepat, dan simpel.</div><main><section class="hero"><div><small>TRAXSHOP</small><h1>Belanja kebutuhanmu<br>di satu tempat.</h1><p>Fashion, olahraga, gadget, makanan, dan lifestyle.</p><button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Mulai Belanja</button></div><div class="balance"><b>TraxPay</b><span>Saldo demo</span><strong id="heroBalance">Rp0</strong></div></section><section class="section"><h2>Kategori</h2><div class="categories"><button data-cat="all">Semua</button><button data-cat="Fashion">👕 Fashion</button><button data-cat="Sports">🥊 Sports</button><button data-cat="Gadget">📱 Gadget</button><button data-cat="Food">🍜 Food</button><button data-cat="Lifestyle">✨ Lifestyle</button></div></section><section class="section" id="products"><div class="head"><h2>Produk Pilihan</h2><select id="sort"><option value="popular">Terpopuler</option><option value="cheap">Termurah</option><option value="expensive">Termahal</option></select></div><div id="productGrid" class="grid"></div></section></main><footer><b>TraxShop</b><span>Marketplace demo © 2026</span></footer><div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div><div class="toast" id="toast"></div><script src="assets/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traxshop - Belanja Mudah</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-top {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+hhho      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #00d084;
+    }
+
+    .login-btn {
+      border: 0;
+      background: #00d084;
+      color: #111;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search-box {
+      max-width: 1100px;
+      margin: 15px auto 0;
+      display: flex;
+      gap: 8px;
+    }
+
+    .search-box input {
+      flex: 1;h
+      padding: 13px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .search-box button {
+      padding: 0 18px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 30px;
+      background: #111;
+      color: white;
+      border-radius: 14px;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #ccc;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 15px 40px;
+    }
+
+    .section-title {
+      margin: 25px 0 15px;
+      font-size: 22px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .product-img {
+      height: 150px;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+
+    .product-info {
+      padding: 14px;
+    }
+
+    .product-name {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      color: #00a86b;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 7px;
+      background: #111;
+      color: white;
+      cursor: pointer;
+    }
+
+    .buy-btn:hover {
+      background: #00a86b;
+    }
+
+    .dashboard {
+      display: none;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .dashboard.active {
+      display: block;
+    }
+
+    .balance {
+      background: #111;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .balance strong {
+      display: block;
+      font-size: 26px;
+      margin-top: 8px;
+      color: #00d084;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      padding: 25px;
+    }
+
+    .modal-box h2 {
+      margin-bottom: 18px;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+    }
+
+    .modal-box button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 7px;
+      background: #111;
+      color: white;
+      cursor: pointer;
+    }
+
+    .close {
+      background: #ddd !important;
+      color: #111 !important;
+      margin-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #111;
+      color: #aaa;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo">Trax<span>shop</span></div>
+
+    <button class="login-btn" onclick="openLogin()">
+      Login
+    </button>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Cari barang di Traxshop..."
+      onkeyup="searchProducts()"
+    >
+    <button onclick="searchProducts()">🔎 Cari</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Selamat datang di Traxshop</h1>
+    <p>Belanja mudah, cepat, dan praktis.</p>
+  </section>
+
+  <section id="dashboard" class="dashboard">
+    <h2>Dashboard Pelanggan</h2>
+
+    <p style="margin-top:10px;">
+      Nama: <strong id="customerName">Pelanggan</strong>
+    </p>
+
+    <p style="margin-top:6px;">
+      ID Pelanggan: <strong id="customerId">TRX001</strong>
+    </p>
+
+    <div class="balance">
+      Saldo pelanggan
+      <strong id="customerBalance">Rp 500.000</strong>
+    </div>
+  </section>
+
+  <h2 class="section-title">Produk Traxshop</h2>
+
+  <section class="products" id="productList">
+
+    <div class="product">
+      <div class="product-img">👕</div>
+      <div class="product-info">
+        <div class="product-name">Kaos Traxshop</div>
+        <div class="price">Rp 75.000</div>
+        <button class="buy-btn" onclick="orderProduct('Kaos Traxshop')">
+          Pesan
+        </button>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-img">👟</div>
+      <div class="product-info">
+        <div class="product-name">Sepatu Sport</div>
+        <div class="price">Rp 250.000</div>
+        <button class="buy-btn" onclick="orderProduct('Sepatu Sport')">
+          Pesan
+        </button>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-img">🎒</div>
+      <div class="product-info">
+        <div class="product-name">Tas Trax</div>
+        <div class="price">Rp 150.000</div>
+        <button class="buy-btn" onclick="orderProduct('Tas Trax')">
+          Pesan
+        </button>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-img">⌚</div>
+      <div class="product-info">
+        <div class="product-name">Jam Sport</div>
+        <div class="price">Rp 120.000</div>
+        <button class="buy-btn" onclick="orderProduct('Jam Sport')">
+          Pesan
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Traxshop — Semua hak dilindungi
+</footer>
+
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+  <div class="modal-box">
+
+    <h2>Login Traxshop</h2>
+
+    <input
+      type="text"
+      id="loginName"
+      placeholder="Nama pelanggan"
+    >
+
+    <input
+      type="text"
+      id="loginId"
+      placeholder="ID / Nomor HP"
+    >
+
+    <input
+      type="password"
+      id="loginPassword"
+      placeholder="Password"
+    >
+
+    <button onclick="login()">
+      Masuk
+    </button>
+
+    <button class="close"
