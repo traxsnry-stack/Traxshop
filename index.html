@@ -1,926 +1,2693 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Traxshop - Belanja Mudah</title>
+<title>Traxshop — Belanja Online</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --black:#111111;
+    --dark:#181818;
+    --green:#00c875;
+    --green2:#00a866;
+    --white:#ffffff;
+    --gray:#f5f5f5;
+    --gray2:#eeeeee;
+    --text:#222222;
+    --muted:#777777;
+    --danger:#e53935;
+    --warning:#ff9800;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f5f5f5;
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#eeeeee;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#222222;
+    border-radius:20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#111;
+    color:white;
+    box-shadow:0 3px 15px rgba(0,0,0,.2);
+}
+
+.header-main{
+    max-width:1300px;
+    margin:auto;
+    padding:13px 18px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:-1px;
+    white-space:nowrap;
+}
+
+.logo span{
+    color:var(--green);
+}
+
+.search-area{
+    flex:1;
+    display:flex;
+    background:white;
+    border-radius:9px;
+    overflow:hidden;
+    height:44px;
+}
+
+.search-area input{
+    flex:1;
+    border:0;
+    outline:0;
+    padding:0 15px;
+    font-size:14px;
+}
+
+.search-area button{
+    width:55px;
+    border:0;
+    background:var(--green);
+    color:#111;
+    font-size:18px;
+}
+
+.search-area button:hover{
+    background:#00b96d;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.header-icon{
+    width:40px;
+    height:40px;
+    border:0;
+    background:transparent;
+    color:white;
+    border-radius:8px;
+    position:relative;
+    font-size:19px;
+}
+
+.header-icon:hover{
+    background:#242424;
+}
+
+.cart-count{
+    position:absolute;
+    top:1px;
+    right:0;
+    background:red;
+    color:white;
+    width:18px;
+    height:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.login-button{
+    border:0;
+    background:var(--green);
+    color:#111;
+    font-weight:bold;
+    padding:11px 16px;
+    border-radius:8px;
+}
+
+.login-button:hover{
+    background:#00b96d;
+}
+
+/* =========================
+   SECOND NAV
+========================= */
+
+.navbar{
+    background:white;
+    border-bottom:1px solid #ddd;
+}
+
+.navbar-inner{
+    max-width:1300px;
+    margin:auto;
+    padding:9px 18px;
+    display:flex;
+    gap:9px;
+    overflow-x:auto;
+}
+
+.nav-item{
+    border:1px solid #ddd;
+    background:white;
+    border-radius:20px;
+    padding:8px 15px;
+    white-space:nowrap;
+    font-size:13px;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:#111;
+    color:white;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    max-width:1300px;
+    margin:auto;
+    padding:20px 18px 60px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:330px;
+    background:#111;
+    border-radius:18px;
+    color:white;
+    padding:45px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    overflow:hidden;
+    position:relative;
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:rgba(0,200,117,.12);
+    right:-80px;
+    top:-70px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:650px;
+}
+
+.hero-badge{
+    display:inline-block;
+    background:#00c875;
+    color:#111;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:43px;
+    line-height:1.1;
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:var(--green);
+}
+
+.hero p{
+    color:#cfcfcf;
+    line-height:1.7;
+    max-width:600px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.hero-primary{
+    border:0;
+    background:var(--green);
+    color:#111;
+    padding:13px 20px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.hero-secondary{
+    border:1px solid #555;
+    background:transparent;
+    color:white;
+    padding:13px 20px;
+    border-radius:8px;
+}
+
+.hero-secondary:hover{
+    background:#222;
+}
+
+.hero-icon{
+    position:relative;
+    z-index:2;
+    font-size:130px;
+    opacity:.95;
+}
+
+/* =========================
+   QUICK FEATURES
+========================= */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.feature{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.feature-icon{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:#eefcf6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.feature h3{
+    font-size:14px;
+    margin-bottom:4px;
+}
+
+.feature p{
+    font-size:12px;
+    color:#777;
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:30px 0 15px;
+    gap:15px;
+}
+
+.section-header h2{
+    font-size:22px;
+}
+
+.section-header p{
+    font-size:13px;
+    color:#777;
+    margin-top:4px;
+}
+
+.section-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.sort-select{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:9px 12px;
+    outline:none;
+}
+
+/* =========================
+   PRODUCT GRID
+========================= */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+}
+
+.product-card{
+    background:white;
+    border-radius:13px;
+    overflow:hidden;
+    box-shadow:0 2px 9px rgba(0,0,0,.06);
+    transition:.2s;
+    position:relative;
+}
+
+.product-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 7px 18px rgba(0,0,0,.11);
+}
+
+.product-image{
+    height:190px;
+    background:#eeeeee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:70px;
+    position:relative;
+}
+
+.product-badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:#111;
+    color:white;
+    padding:5px 8px;
+    border-radius:5px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.product-favorite{
+    position:absolute;
+    top:9px;
+    right:9px;
+    width:34px;
+    height:34px;
+    border:0;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 2px 7px rgba(0,0,0,.15);
+}
+
+.product-favorite.active{
+    color:red;
+}
+
+.product-info{
+    padding:13px;
+}
+
+.product-title{
+    font-size:14px;
+    font-weight:bold;
+    line-height:1.4;
+    min-height:39px;
+}
+
+.product-category{
+    font-size:11px;
+    color:#888;
+    margin:6px 0;
+}
+
+.product-rating{
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+.product-price{
+    font-size:17px;
+    color:var(--green2);
+    font-weight:bold;
+}
+
+.product-old-price{
+    color:#999;
+    text-decoration:line-through;
+    font-size:11px;
+    margin-left:4px;
+}
+
+.product-stock{
+    color:#888;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.product-actions{
+    display:flex;
+    gap:6px;
+    margin-top:10px;
+}
+
+.product-detail-button,
+.product-cart-button{
+    flex:1;
+    border:0;
+    padding:9px 5px;
+    border-radius:7px;
+    font-size:12px;
+}
+
+.product-detail-button{
+    background:#eeeeee;
+}
+
+.product-cart-button{
+    background:#111;
+    color:white;
+}
+
+.product-cart-button:hover{
+    background:var(--green2);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state{
+    background:white;
+    padding:50px 20px;
+    border-radius:12px;
+    text-align:center;
+    color:#777;
+}
+
+.empty-state-icon{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   CATEGORY CARDS
+========================= */
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+}
+
+.category-card{
+    background:white;
+    border-radius:12px;
+    padding:22px 10px;
+    text-align:center;
+    border:1px solid #eee;
+    transition:.2s;
+}
+
+.category-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.category-card-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.category-card h3{
+    font-size:13px;
+}
+
+.category-card p{
+    font-size:11px;
+    color:#888;
+    margin-top:5px;
+}
+
+/* =========================
+   PROMO
+========================= */
+
+.promo-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:14px;
+}
+
+.promo-card{
+    background:#111;
+    color:white;
+    border-radius:14px;
+    padding:25px;
+    min-height:150px;
+    position:relative;
+    overflow:hidden;
+}
+
+.promo-card.green{
+    background:#00c875;
+    color:#111;
+}
+
+.promo-card.light{
+    background:white;
+    color:#111;
+    border:1px solid #eee;
+}
+
+.promo-card h3{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.promo-card p{
+    font-size:13px;
+    color:#aaa;
+    max-width:300px;
+}
+
+.promo-card.green p{
+    color:#174c38;
+}
+
+.promo-card.light p{
+    color:#777;
+}
+
+.promo-big-icon{
+    position:absolute;
+    right:20px;
+    bottom:0;
+    font-size:80px;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard{
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    margin-top:25px;
+    display:none;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.dashboard.show{
+    display:block;
+}
+
+.dashboard-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.dashboard-title h2{
+    font-size:23px;
+}
+
+.dashboard-title p{
+    color:#777;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.dashboard-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.dashboard-button{
+    border:0;
+    background:#eee;
+    padding:9px 13px;
+    border-radius:7px;
+}
+
+.dashboard-button.logout{
+    background:#e53935;
+    color:white;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.dashboard-card{
+    background:#f7f7f7;
+    padding:17px;
+    border-radius:11px;
+}
+
+.dashboard-card small{
+    color:#777;
+}
+
+.dashboard-card strong{
+    display:block;
+    margin-top:7px;
+    font-size:21px;
+}
+
+.dashboard-card.balance{
+    background:#111;
+    color:white;
+}
+
+.dashboard-card.balance small{
+    color:#aaa;
+}
+
+.dashboard-card.balance strong{
+    color:#00c875;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.68);
+    z-index:5000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    max-height:92vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:21px;
+}
+
+.close-button{
+    border:0;
+    background:#eee;
+    width:33px;
+    height:33px;
+    border-radius:50%;
+    font-size:18px;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+    font-size:13px;
+    margin-bottom:6px;
+    color:#555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#00c875;
+}
+
+.primary-button{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    background:#111;
+    color:white;
+    font-weight:bold;
+}
+
+.primary-button:hover{
+    background:#00a866;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translate(-50%,120px);
+    background:#111;
+    color:white;
+    padding:13px 18px;
+    border-radius:9px;
+    z-index:9000;
+    opacity:0;
+    transition:.3s;
+    font-size:13px;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#111;
+    color:#999;
+    margin-top:20px;
+}
+
+.footer-inner{
+    max-width:1300px;
+    margin:auto;
+    padding:40px 18px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:30px;
+}
+
+.footer-logo{
+    color:white;
+    font-size:25px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.footer-logo span{
+    color:#00c875;
+}
+
+.footer-column h3{
+    color:white;
+    font-size:14px;
+    margin-bottom:13px;
+}
+
+.footer-column p,
+.footer-column a{
+    display:block;
+    font-size:12px;
+    margin-bottom:8px;
+    color:#999;
+}
+
+.footer-column a:hover{
+    color:#00c875;
+}
+
+.footer-bottom{
+    border-top:1px solid #292929;
+    text-align:center;
+    padding:18px;
+    font-size:12px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .product-grid{
+        grid-template-columns:repeat(4,1fr);
     }
 
-    body {
-      background: #f5f5f5;
-      color: #222;
+    .category-grid{
+        grid-template-columns:repeat(3,1fr);
     }
 
-    /* HEADER */
-    header {
-      background: #111;
-      color: white;
-      padding: 18px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    .dashboard-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .header-top {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
+}
+
+@media(max-width:800px){
+
+    .header-main{
+        flex-wrap:wrap;
     }
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
+    .search-area{
+        order:3;
+        flex-basis:100%;
     }
 
-    .logo span {
-      color: #00d084;
+    .hero{
+        padding:30px;
     }
 
-    .login-btn {
-      border: 0;
-      background: #00d084;
-      color: #111;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
+    .hero h1{
+        font-size:34px;
     }
 
-    .login-btn:hover {
-      background: #00b873;
+    .hero-icon{
+        font-size:90px;
     }
 
-    /* SEARCH */
-    .search-box {
-      max-width: 1100px;
-      margin: 15px auto 0;
-      display: flex;
-      gap: 8px;
+    .features{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .search-box input {
-      flex: 1;
-      padding: 13px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 15px;
+    .product-grid{
+        grid-template-columns:repeat(3,1fr);
     }
 
-    .search-box button {
-      padding: 0 18px;
-      border: none;
-      border-radius: 8px;
-      background: white;
-      cursor: pointer;
+    .promo-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    /* CONTAINER */
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0 15px 40px;
+    .promo-card:first-child{
+        grid-column:1 / -1;
     }
 
-    /* HERO */
-    .hero {
-      max-width: 1100px;
-      margin: 25px auto;
-      padding: 30px;
-      background: #111;
-      color: white;
-      border-radius: 14px;
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .hero h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
+}
+
+@media(max-width:600px){
+
+    .header-main{
+        padding:10px 12px;
+        gap:9px;
     }
 
-    .hero p {
-      color: #ccc;
+    .logo{
+        font-size:22px;
     }
 
-    /* DASHBOARD */
-    .dashboard {
-      display: none;
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    .header-actions{
+        margin-left:auto;
     }
 
-    .dashboard.active {
-      display: block;
+    .header-icon{
+        width:34px;
+        height:34px;
     }
 
-    .dashboard h2 {
-      margin-bottom: 10px;
+    .login-button{
+        padding:9px 11px;
+        font-size:12px;
     }
 
-    .balance {
-      background: #111;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 15px;
+    .container{
+        padding:12px 10px 40px;
     }
 
-    .balance strong {
-      display: block;
-      font-size: 26px;
-      margin-top: 8px;
-      color: #00d084;
+    .hero{
+        min-height:300px;
+        padding:25px;
     }
 
-    .logout-btn {
-      margin-top: 15px;
-      padding: 10px 18px;
-      border: none;
-      border-radius: 7px;
-      background: #e53935;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
+    .hero h1{
+        font-size:28px;
     }
 
-    /* PRODUCTS */
-    .section-title {
-      margin: 25px 0 15px;
-      font-size: 22px;
+    .hero p{
+        font-size:13px;
     }
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
+    .hero-icon{
+        display:none;
     }
 
-    .product {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    .features{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
     }
 
-    .product-img {
-      height: 150px;
-      background: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 50px;
+    .feature{
+        padding:12px;
     }
 
-    .product-info {
-      padding: 14px;
+    .feature h3{
+        font-size:12px;
     }
 
-    .product-name {
-      font-weight: bold;
-      margin-bottom: 8px;
+    .feature p{
+        font-size:10px;
     }
 
-    .price {
-      color: #00a86b;
-      font-weight: bold;
-      margin-bottom: 12px;
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .buy-btn {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 7px;
-      background: #111;
-      color: white;
-      cursor: pointer;
+    .section-actions{
+        width:100%;
     }
 
-    .buy-btn:hover {
-      background: #00a86b;
+    .sort-select{
+        width:100%;
     }
 
-    /* MODAL LOGIN */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.65);
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-      padding: 20px;
+    .product-grid{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
     }
 
-    .modal.active {
-      display: flex;
+    .product-image{
+        height:135px;
+        font-size:55px;
     }
 
-    .modal-box {
-      background: white;
-      width: 100%;
-      max-width: 400px;
-      border-radius: 12px;
-      padding: 25px;
+    .product-info{
+        padding:10px;
     }
 
-    .modal-box h2 {
-      margin-bottom: 18px;
+    .product-title{
+        font-size:13px;
     }
 
-    .modal-box input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border: 1px solid #ddd;
-      border-radius: 7px;
-      outline: none;
+    .product-price{
+        font-size:15px;
     }
 
-    .modal-box button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 7px;
-      background: #111;
-      color: white;
-      cursor: pointer;
+    .product-actions{
+        flex-direction:column;
     }
 
-    .modal-box button:hover {
-      background: #00a86b;
+    .category-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .close {
-      background: #ddd !important;
-      color: #111 !important;
-      margin-top: 8px;
+    .promo-grid{
+        grid-template-columns:1fr;
     }
 
-    .close:hover {
-      background: #ccc !important;
+    .promo-card:first-child{
+        grid-column:auto;
     }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 25px;
-      background: #111;
-      color: #aaa;
-      margin-top: 30px;
+    .dashboard-head{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
     }
 
-    /* MOBILE */
-    @media (max-width: 600px) {
-
-      .logo {
-        font-size: 22px;
-      }
-
-      .hero h1 {
-        font-size: 24px;
-      }
-
-      .search-box button {
-        padding: 0 12px;
-      }
-
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .product-img {
-        height: 120px;
-      }
+    .dashboard-grid{
+        grid-template-columns:1fr 1fr;
     }
-  </style>
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
+<!-- =========================
+     HEADER
+========================= -->
 
-    <div class="header-top">
+<header>
 
-      <div class="logo">
-        Trax<span>shop</span>
-      </div>
+    <div class="header-main">
 
-      <button
-        class="login-btn"
-        id="loginButton"
-        onclick="openLogin()"
-      >
-        Login
-      </button>
+        <div class="logo">
+            Trax<span>shop</span>
+        </div>
+
+        <div class="search-area">
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Cari produk, fashion, sepatu..."
+            >
+
+            <button onclick="searchProducts()">
+                🔎
+            </button>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="header-icon"
+                onclick="openOrders()"
+                title="Pesanan"
+            >
+                📦
+            </button>
+
+            <button
+                class="header-icon"
+                onclick="openWishlist()"
+                title="Wishlist"
+            >
+                ❤️
+            </button>
+
+            <button
+                class="header-icon"
+                onclick="openCart()"
+                title="Keranjang"
+            >
+
+                🛒
+
+                <span
+                    class="cart-count"
+                    id="cartCount"
+                >
+                    0
+                </span>
+
+            </button>
+
+            <button
+                class="login-button"
+                id="loginButton"
+                onclick="openLogin()"
+            >
+                Login
+            </button>
+
+        </div>
 
     </div>
 
-    <!-- SEARCH -->
-    <div class="search-box">
+</header>
 
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Cari barang di Traxshop..."
-        onkeyup="searchProducts()"
-      >
 
-      <button onclick="searchProducts()">
-        🔎 Cari
-      </button>
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="navbar">
+
+    <div class="navbar-inner">
+
+        <button
+            class="nav-item active"
+            onclick="filterCategory('Semua',this)"
+        >
+            🏠 Semua
+        </button>
+
+        <button
+            class="nav-item"
+            onclick="filterCategory('Fashion',this)"
+        >
+            👕 Fashion
+        </button>
+
+        <button
+            class="nav-item"
+            onclick="filterCategory('Sepatu',this)"
+        >
+            👟 Sepatu
+        </button>
+
+        <button
+            class="nav-item"
+            onclick="filterCategory('Olahraga',this)"
+        >
+            🥊 Olahraga
+        </button>
+
+        <button
+            class="nav-item"
+            onclick="filterCategory('Elektronik',this)"
+        >
+            📱 Elektronik
+        </button>
+
+        <button
+            class="nav-item"
+            onclick="filterCategory('Aksesoris',this)"
+        >
+            ⌚ Aksesoris
+        </button>
+
+        <button
+            class="nav-item"
+            onclick="filterCategory('Tas',this)"
+        >
+            🎒 Tas
+        </button>
 
     </div>
 
-  </header>
+</nav>
 
 
-  <!-- MAIN -->
-  <main class="container">
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
 
     <!-- HERO -->
+
     <section class="hero">
 
-      <h1>
-        Selamat datang di Traxshop
-      </h1>
+        <div class="hero-content">
 
-      <p>
-        Belanja mudah, cepat, dan praktis.
-      </p>
+            <span class="hero-badge">
+                ⚡ TRAXSHOP ONLINE
+            </span>
+
+            <h1>
+                Belanja lebih mudah
+                bersama <span>Traxshop</span>
+            </h1>
+
+            <p>
+                Temukan berbagai produk pilihan,
+                masukkan ke keranjang,
+                dan lakukan pemesanan langsung
+                dari Traxshop.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="hero-primary"
+                    onclick="scrollToProducts()"
+                >
+                    🛍️ Belanja Sekarang
+                </button>
+
+                <button
+                    class="hero-secondary"
+                    onclick="openLogin()"
+                >
+                    👤 Login Pelanggan
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="hero-icon">
+            🛒
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🚚
+            </div>
+
+            <div>
+
+                <h3>
+                    Pengiriman
+                </h3>
+
+                <p>
+                    Pilihan kurir
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔒
+            </div>
+
+            <div>
+
+                <h3>
+                    Aman
+                </h3>
+
+                <p>
+                    Data pelanggan
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💰
+            </div>
+
+            <div>
+
+                <h3>
+                    Saldo
+                </h3>
+
+                <p>
+                    Pembayaran demo
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h3>
+                    Pesanan
+                </h3>
+
+                <p>
+                    Pantau transaksi
+                </p>
+
+            </div>
+
+        </div>
 
     </section>
 
 
     <!-- DASHBOARD -->
+
     <section
-      id="dashboard"
-      class="dashboard"
+        class="dashboard"
+        id="dashboard"
     >
 
-      <h2>
-        Dashboard Pelanggan
-      </h2>
+        <div class="dashboard-head">
 
-      <p style="margin-top:10px;">
-        Nama:
-        <strong id="customerName">
-          Pelanggan
-        </strong>
-      </p>
+            <div class="dashboard-title">
 
-      <p style="margin-top:6px;">
-        ID Pelanggan:
-        <strong id="customerId">
-          TRX001
-        </strong>
-      </p>
+                <h2>
+                    Dashboard Pelanggan
+                </h2>
 
-      <div class="balance">
+                <p>
+                    Selamat datang kembali,
+                    <strong id="dashboardName">
+                        Pelanggan
+                    </strong>
+                </p>
 
-        Saldo pelanggan
+            </div>
 
-        <strong id="customerBalance">
-          Rp 500.000
-        </strong>
+            <div class="dashboard-buttons">
 
-      </div>
+                <button
+                    class="dashboard-button"
+                    onclick="openProfile()"
+                >
+                    👤 Profil
+                </button>
 
-      <button
-        class="logout-btn"
-        onclick="logout()"
-      >
-        Logout
-      </button>
+                <button
+                    class="dashboard-button"
+                    onclick="openOrders()"
+                >
+                    📦 Pesanan
+                </button>
+
+                <button
+                    class="dashboard-button logout"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <small>
+                    Nama Pelanggan
+                </small>
+
+                <strong id="dashboardCustomerName">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <small>
+                    ID Pelanggan
+                </small>
+
+                <strong id="dashboardCustomerId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="dashboard-card balance">
+
+                <small>
+                    Saldo
+                </small>
+
+                <strong id="dashboardBalance">
+                    Rp 0
+                </strong>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <small>
+                    Total Pesanan
+                </small>
+
+                <strong id="dashboardOrders">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATEGORY -->
+
+    <div class="section-header">
+
+        <div>
+
+            <h2>
+                Kategori
+            </h2>
+
+            <p>
+                Pilih kategori produk yang kamu cari
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section class="category-grid">
+
+        <button
+            class="category-card"
+            onclick="filterCategory('Fashion')"
+        >
+
+            <div class="category-card-icon">
+                👕
+            </div>
+
+            <h3>
+                Fashion
+            </h3>
+
+            <p>
+                Pakaian
+            </p>
+
+        </button>
+
+
+        <button
+            class="category-card"
+            onclick="filterCategory('Sepatu')"
+        >
+
+            <div class="category-card-icon">
+                👟
+            </div>
+
+            <h3>
+                Sepatu
+            </h3>
+
+            <p>
+                Sneakers & Sport
+            </p>
+
+        </button>
+
+
+        <button
+            class="category-card"
+            onclick="filterCategory('Olahraga')"
+        >
+
+            <div class="category-card-icon">
+                🥊
+            </div>
+
+            <h3>
+                Olahraga
+            </h3>
+
+            <p>
+                Training
+            </p>
+
+        </button>
+
+
+        <button
+            class="category-card"
+            onclick="filterCategory('Elektronik')"
+        >
+
+            <div class="category-card-icon">
+                📱
+            </div>
+
+            <h3>
+                Elektronik
+            </h3>
+
+            <p>
+                Gadget
+            </p>
+
+        </button>
+
+
+        <button
+            class="category-card"
+            onclick="filterCategory('Aksesoris')"
+        >
+
+            <div class="category-card-icon">
+                ⌚
+            </div>
+
+            <h3>
+                Aksesoris
+            </h3>
+
+            <p>
+                Pelengkap
+            </p>
+
+        </button>
+
+
+        <button
+            class="category-card"
+            onclick="filterCategory('Tas')"
+        >
+
+            <div class="category-card-icon">
+                🎒
+            </div>
+
+            <h3>
+                Tas
+            </h3>
+
+            <p>
+                Tas harian
+            </p>
+
+        </button>
+
+    </section>
+
+
+    <!-- PROMO -->
+
+    <div class="section-header">
+
+        <div>
+
+            <h2>
+                Promo Traxshop
+            </h2>
+
+            <p>
+                Penawaran pilihan
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section class="promo-grid">
+
+        <div class="promo-card">
+
+            <h3>
+                Belanja Lebih Praktis
+            </h3>
+
+            <p>
+                Cari produk favorit,
+                masukkan ke keranjang,
+                lalu checkout.
+            </p>
+
+            <div class="promo-big-icon">
+                🛍️
+            </div>
+
+        </div>
+
+
+        <div class="promo-card green">
+
+            <h3>
+                Produk Sport
+            </h3>
+
+            <p>
+                Perlengkapan latihan.
+            </p>
+
+            <div class="promo-big-icon">
+                🥊
+            </div>
+
+        </div>
+
+
+        <div class="promo-card light">
+
+            <h3>
+                Fashion
+            </h3>
+
+            <p>
+                Gaya harian Traxshop.
+            </p>
+
+            <div class="promo-big-icon">
+                👕
+            </div>
+
+        </div>
 
     </section>
 
 
     <!-- PRODUCTS -->
-    <h2 class="section-title">
-      Produk Traxshop
-    </h2>
 
-
-    <section
-      class="products"
-      id="productList"
+    <div
+        class="section-header"
+        id="productsSection"
     >
 
-      <!-- PRODUCT 1 -->
-      <div class="product">
+        <div>
 
-        <div class="product-img">
-          👕
-        </div>
+            <h2>
+                Produk Pilihan
+            </h2>
 
-        <div class="product-info">
-
-          <div class="product-name">
-            Kaos Traxshop
-          </div>
-
-          <div class="price">
-            Rp 75.000
-          </div>
-
-          <button
-            class="buy-btn"
-            onclick="orderProduct('Kaos Traxshop', 75000)"
-          >
-            Pesan
-          </button>
+            <p id="productDescription">
+                Produk terbaru Traxshop
+            </p>
 
         </div>
 
-      </div>
+        <div class="section-actions">
 
+            <select
+                class="sort-select"
+                id="sortSelect"
+                onchange="sortProducts()"
+            >
 
-      <!-- PRODUCT 2 -->
-      <div class="product">
+                <option value="default">
+                    Urutan
+                </option>
 
-        <div class="product-img">
-          👟
-        </div>
+                <option value="cheap">
+                    Harga termurah
+                </option>
 
-        <div class="product-info">
+                <option value="expensive">
+                    Harga termahal
+                </option>
 
-          <div class="product-name">
-            Sepatu Sport
-          </div>
+                <option value="rating">
+                    Rating tertinggi
+                </option>
 
-          <div class="price">
-            Rp 250.000
-          </div>
+                <option value="name">
+                    Nama A-Z
+                </option>
 
-          <button
-            class="buy-btn"
-            onclick="orderProduct('Sepatu Sport', 250000)"
-          >
-            Pesan
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRODUCT 3 -->
-      <div class="product">
-
-        <div class="product-img">
-          🎒
-        </div>
-
-        <div class="product-info">
-
-          <div class="product-name">
-            Tas Trax
-          </div>
-
-          <div class="price">
-            Rp 150.000
-          </div>
-
-          <button
-            class="buy-btn"
-            onclick="orderProduct('Tas Trax', 150000)"
-          >
-            Pesan
-          </button>
+            </select>
 
         </div>
-
-      </div>
-
-
-      <!-- PRODUCT 4 -->
-      <div class="product">
-
-        <div class="product-img">
-          ⌚
-        </div>
-
-        <div class="product-info">
-
-          <div class="product-name">
-            Jam Sport
-          </div>
-
-          <div class="price">
-            Rp 120.000
-          </div>
-
-          <button
-            class="buy-btn"
-            onclick="orderProduct('Jam Sport', 120000)"
-          >
-            Pesan
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer>
-
-    © 2026 Traxshop — Semua hak dilindungi
-
-  </footer>
-
-
-  <!-- LOGIN MODAL -->
-  <div
-    class="modal"
-    id="loginModal"
-  >
-
-    <div class="modal-box">
-
-      <h2>
-        Login Traxshop
-      </h2>
-
-      <input
-        type="text"
-        id="loginName"
-        placeholder="Nama pelanggan"
-      >
-
-      <input
-        type="text"
-        id="loginId"
-        placeholder="ID / Nomor HP"
-      >
-
-      <input
-        type="password"
-        id="loginPassword"
-        placeholder="Password"
-      >
-
-      <button onclick="login()">
-        Masuk
-      </button>
-
-      <button
-        class="close"
-        onclick="closeLogin()"
-      >
-        Tutup
-      </button>
 
     </div>
 
-  </div>
+
+    <section
+        class="product-grid"
+        id="productList"
+    ></section>
 
 
-  <!-- JAVASCRIPT -->
-  <script>
+    <div
+        class="empty-state hidden"
+        id="emptyProducts"
+    >
 
-    /*
-      DATA PELANGGAN DEMO
+        <div class="empty-state-icon">
+            🔍
+        </div>
 
-      ID       : TRX001
-      HP       : 081234567890
-      PASSWORD : 123456
-    */
+        <h3>
+            Produk tidak ditemukan
+        </h3>
 
-    const customer = {
+        <p style="margin-top:7px;">
+            Coba gunakan kata pencarian lain.
+        </p>
 
-      name: "Trax Customer",
+    </div>
 
-      id: "TRX001",
-
-      phone: "081234567890",
-
-      password: "123456",
-
-      balance: 500000
-
-    };
+</main>
 
 
-    /*
-      BUKA LOGIN
-    */
+<!-- =========================
+     FOOTER
+========================= -->
 
-    function openLogin() {
+<footer>
 
-      document
-        .getElementById("loginModal")
-        .classList
-        .add("active");
+    <div class="footer-inner">
 
-    }
+        <div class="footer-grid">
 
+            <div class="footer-column">
 
-    /*
-      TUTUP LOGIN
-    */
+                <div class="footer-logo">
+                    Trax<span>shop</span>
+                </div>
 
-    function closeLogin() {
+                <p>
+                    Platform belanja online
+                    yang sedang dikembangkan
+                    untuk menjadi ekosistem
+                    Traxshop.
+                </p>
 
-      document
-        .getElementById("loginModal")
-        .classList
-        .remove("active");
-
-    }
+            </div>
 
 
-    /*
-      LOGIN
-    */
+            <div class="footer-column">
 
-    function login() {
+                <h3>
+                    Traxshop
+                </h3>
 
-      const name =
-        document
-          .getElementById("loginName")
-          .value
-          .trim();
+                <a href="#">
+                    Tentang Kami
+                </a>
 
-      const id =
-        document
-          .getElementById("loginId")
-          .value
-          .trim();
+                <a href="#">
+                    Cara Belanja
+                </a>
 
-      const password =
-        document
-          .getElementById("loginPassword")
-          .value
-          .trim();
+                <a href="#">
+                    Pusat Bantuan
+                </a>
+
+            </div>
 
 
-      /*
-        CEK ID / NOMOR HP
-      */
+            <div class="footer-column">
 
-      if (
-        id !== customer.id &&
-        id !== customer.phone
-      ) {
+                <h3>
+                    Pelanggan
+                </h3>
 
-        alert(
-          "ID pelanggan atau nomor HP tidak ditemukan."
+                <a href="#" onclick="openLogin()">
+                    Login
+                </a>
+
+                <a href="#" onclick="openOrders()">
+                    Pesanan
+                </a>
+
+                <a href="#" onclick="openCart()">
+                    Keranjang
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Kontak
+                </h3>
+
+                <p>
+                    📧 support@traxshop
+                </p>
+
+                <p>
+                    📱 Traxshop
+                </p>
+
+                <p>
+                    🇮🇩 Indonesia
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 Traxshop.
+        Semua hak dilindungi.
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =====================================================
+   DATA PRODUK
+===================================================== */
+
+const products = [
+
+{
+    id:1,
+    name:"Kaos Traxshop Original",
+    category:"Fashion",
+    price:75000,
+    oldPrice:95000,
+    stock:20,
+    rating:4.9,
+    sold:124,
+    icon:"👕"
+},
+
+{
+    id:2,
+    name:"Sepatu Sport Trax Runner",
+    category:"Sepatu",
+    price:250000,
+    oldPrice:320000,
+    stock:12,
+    rating:4.8,
+    sold:86,
+    icon:"👟"
+},
+
+{
+    id:3,
+    name:"Tas Trax Daily",
+    category:"Tas",
+    price:150000,
+    oldPrice:190000,
+    stock:15,
+    rating:4.7,
+    sold:63,
+    icon:"🎒"
+},
+
+{
+    id:4,
+    name:"Jam Sport Digital",
+    category:"Aksesoris",
+    price:120000,
+    oldPrice:160000,
+    stock:10,
+    rating:4.6,
+    sold:51,
+    icon:"⌚"
+},
+
+{
+    id:5,
+    name:"Sarung Tinju Training",
+    category:"Olahraga",
+    price:180000,
+    oldPrice:220000,
+    stock:8,
+    rating:4.9,
+    sold:102,
+    icon:"🥊"
+},
+
+{
+    id:6,
+    name:"Celana Training Sport",
+    category:"Fashion",
+    price:95000,
+    oldPrice:125000,
+    stock:20,
+    rating:4.7,
+    sold:72,
+    icon:"🩳"
+},
+
+{
+    id:7,
+    name:"Hoodie Trax Original",
+    category:"Fashion",
+    price:175000,
+    oldPrice:220000,
+    stock:14,
+    rating:4.9,
+    sold:118,
+    icon:"🧥"
+},
+
+{
+    id:8,
+    name:"Topi Trax Classic",
+    category:"Fashion",
+    price:55000,
+    oldPrice:70000,
+    stock:25,
+    rating:4.6,
+    sold:91,
+    icon:"🧢"
+},
+
+{
+    id:9,
+    name:"Kacamata Sport",
+    category:"Aksesoris",
+    price:85000,
+    oldPrice:110000,
+    stock:17,
+    rating:4.5,
+    sold:44,
+    icon:"🥽"
+},
+
+{
+    id:10,
+    name:"Smartwatch Trax Fit",
+    category:"Elektronik",
+    price:350000,
+    oldPrice:450000,
+    stock:7,
+    rating:4.8,
+    sold:39,
+    icon:"⌚"
+},
+
+{
+    id:11,
+    name:"Headset Bluetooth",
+    category:"Elektronik",
+    price:220000,
+    oldPrice:280000,
+    stock:9,
+    rating:4.7,
+    sold:58,
+    icon:"🎧"
+},
+
+{
+    id:12,
+    name:"Botol Sport",
+    category:"Olahraga",
+    price:45000,
+    oldPrice:60000,
+    stock:30,
+    rating:4.8,
+    sold:145,
+    icon:"🥤"
+},
+
+{
+    id:13,
+    name:"Sarung Tangan Gym",
+    category:"Olahraga",
+    price:70000,
+    oldPrice:90000,
+    stock:18,
+    rating:4.6,
+    sold:57,
+    icon:"🧤"
+},
+
+{
+    id:14,
+    name:"Sling Bag Trax",
+    category:"Tas",
+    price:110000,
+    oldPrice:140000,
+    stock:13,
+    rating:4.7,
+    sold:69,
+    icon:"👜"
+},
+
+{
+    id:15,
+    name:"Sepatu Running Pro",
+    category:"Sepatu",
+    price:325000,
+    oldPrice:400000,
+    stock:10,
+    rating:4.9,
+    sold:77,
+    icon:"👟"
+},
+
+{
+    id:16,
+    name:"Kaos Oversize Black",
+    category:"Fashion",
+    price:85000,
+    oldPrice:110000,
+    stock:24,
+    rating:4.8,
+    sold:134,
+    icon:"👕"
+},
+
+{
+    id:17,
+    name:"Jaket Windbreaker",
+    category:"Fashion",
+    price:230000,
+    oldPrice:280000,
+    stock:11,
+    rating:4.8,
+    sold:48,
+    icon:"🧥"
+},
+
+{
+    id:18,
+    name:"Handwrap Boxing",
+    category:"Olahraga",
+    price:45000,
+    oldPrice:60000,
+    stock:35,
+    rating:4.9,
+    sold:188,
+    icon:"🥊"
+},
+
+{
+    id:19,
+    name:"Gym Bag",
+    category:"Tas",
+    price:175000,
+    oldPrice:220000,
+    stock:16,
+    rating:4.7,
+    sold:52,
+    icon:"🎒"
+},
+
+{
+    id:20,
+    name:"Earphone Wireless",
+    category:"Elektronik",
+    price:135000,
+    oldPrice:175000,
+    stock:19,
+    rating:4.6,
+    sold:97,
+    icon:"🎧"
+}];
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let cart = JSON.parse(
+    localStorage.getItem("traxshop_cart")
+) || [];
+
+let orders = JSON.parse(
+    localStorage.getItem("traxshop_orders")
+) || [];
+
+let wishlist = JSON.parse(
+    localStorage.getItem("traxshop_wishlist")
+) || [];
+
+let customer = JSON.parse(
+    localStorage.getItem("traxshop_customer")
+) || {
+
+    name:"Trax Customer",
+
+    id:"TRX001",
+
+    phone:"081234567890",
+
+    password:"123456",
+
+    balance:500000
+
+};
+
+let loggedIn =
+    localStorage.getItem("traxshop_loggedin")
+    === "true";
+
+let currentCategory = "Semua";
+
+let searchKeyword = "";
+
+
+/* =====================================================
+   RUPIAH
+===================================================== */
+
+function rupiah(value){
+
+    return "Rp " +
+    Number(value).toLocaleString("id-ID");
+
+}
+
+
+/* =====================================================
+   SAVE DATA
+===================================================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        "traxshop_cart",
+        JSON.stringify(cart)
+    );
+
+    localStorage.setItem(
+        "traxshop_orders",
+        JSON.stringify(orders)
+    );
+
+    localStorage.setItem(
+        "traxshop_wishlist",
+        JSON.stringify(wishlist)
+    );
+
+    localStorage.setItem(
+        "traxshop_customer",
+        JSON.stringify(customer)
+    );
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(message){
+
+    const element =
+        document.getElementById("toast");
+
+    element.textContent = message;
+
+    element.classList.add("show");
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer =
+        setTimeout(function(){
+
+            element.classList.remove("show");
+
+        },2500);
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTS
+===================================================== */
+
+function renderProducts(){
+
+    const list =
+        document.getElementById("productList");
+
+    const empty =
+        document.getElementById("emptyProducts");
+
+    let filtered =
+        products.filter(function(product){
+
+            const categoryMatch =
+                currentCategory === "Semua" ||
+                product.category === currentCategory;
+
+            const keyword =
+                searchKeyword.toLowerCase();
+
+            const searchMatch =
+                product.name
+                .toLowerCase()
+                .includes(keyword) ||
+
+                product.category
+                .toLowerCase()
+                .includes(keyword);
+
+            return categoryMatch &&
+                   searchMatch;
+
+        });
+
+
+    const sort =
+        document.getElementById("sortSelect")
+        .value;
+
+
+    if(sort === "cheap"){
+
+        filtered.sort(
+            (a,b) => a.price - b.price
         );
+
+    }
+
+    if(sort === "expensive"){
+
+        filtered.sort(
+            (a,b) => b.price - a.price
+        );
+
+    }
+
+    if(sort === "rating"){
+
+        filtered.sort(
+            (a,b) => b.rating - a.rating
+        );
+
+    }
+
+    if(sort === "name"){
+
+        filtered.sort(
+            (a,b) =>
+            a.name.localeCompare(b.name)
+        );
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        empty.classList.remove("hidden");
 
         return;
 
-      }
+    }
+
+    empty.classList.add("hidden");
 
 
-      /*
-        CEK PASSWORD
-      */
+    filtered.forEach(function(product){
 
-      if (
-        password !== customer.password
-      ) {
+        const liked =
+            wishlist.includes(product.id);
 
-        alert(
-          "Password salah."
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "product-card";
+
+
+        card.innerHTML = `
+
+            <div class="product-image">
+
+                <span class="product-badge">
+                    ${product.sold > 100 ? "TERLARIS" : "PROMO"}
+                </span>
+
+                <button
+                    class="product-favorite ${liked ? "active" : ""}"
+                    onclick="toggleWishlist(${product.id})"
+                >
+                    ${liked ? "❤️" : "♡"}
+                </button>
+
+                ${product.icon}
+
+            </div>
+
+
+            <div class="product-info">
+
+                <div class="product-title">
+                    ${product.name}
+                </div>
+
+                <div class="product-category">
+                    ${product.category}
+                </div>
+
+                <div class="product-rating">
+                    ⭐ ${product.rating}
+                    · ${product.sold} terjual
+                </div>
+
+                <div class="product-price">
+                    ${rupiah(product.price)}
+
+                    <span class="product-old-price">
+                        ${rupiah(product.oldPrice)}
+                    </span>
+                </div>
+
+                <div class="product-stock">
+                    Stok ${product.stock}
+                </div>
+
+                <div class="product-actions">
+
+                    <button
+                        class="product-detail-button"
+                        onclick="showProductDetail(${product.id})"
+                    >
+                        Detail
+                    </button>
+
+                    <button
+                        class="product-cart-button"
+                        onclick="addToCart(${product.id})"
+                        ${product.stock <= 0 ? "disabled" : ""}
+                    >
+                        🛒 Tambah
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchProducts(){
+
+    searchKeyword =
+        document.getElementById(
+            "searchInput"
+        ).value.trim();
+
+    renderProducts();
+
+}
+
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+function filterCategory(category,button){
+
+    currentCategory = category;
+
+    if(button){
+
+        document
+        .querySelectorAll(".nav-item")
+        .forEach(function(item){
+
+            item.classList.remove("active");
+
+        });
+
+        button.classList.add("active");
+
+    }
+
+    const description =
+        document.getElementById(
+            "productDescription"
         );
+
+    if(category === "Semua"){
+
+        description.textContent =
+            "Produk terbaru Traxshop";
+
+    }else{
+
+        description.textContent =
+            "Kategori: " + category;
+
+    }
+
+    renderProducts();
+
+    scrollToProducts();
+
+}
+
+
+/* =====================================================
+   SORT
+===================================================== */
+
+function sortProducts(){
+
+    renderProducts();
+
+}
+
+
+/* =====================================================
+   SCROLL PRODUCT
+===================================================== */
+
+function scrollToProducts(){
+
+    document
+    .getElementById("productsSection")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+   ADD CART
+===================================================== */
+
+function addToCart(id){
+
+    const product =
+        products.find(
+            p => p.id === id
+        );
+
+    if(!product){
+
+        toast("Produk tidak ditemukan");
 
         return;
 
-      }
+    }
 
+    if(product.stock <= 0){
 
-      /*
-        UPDATE DASHBOARD
-      */
+        toast("Stok produk habis");
 
-      document
-        .getElementById("customerName")
-        .textContent =
-          name || customer.name;
-
-
-      document
-        .getElementById("customerId")
-        .textContent =
-          customer.id;
-
-
-      document
-        .getElementById("customerBalance")
-        .textContent =
-          "Rp " +
-          customer.balance.toLocaleString("id-ID");
-
-
-      /*
-        TAMPILKAN DASHBOARD
-      */
-
-      document
-        .getElementById("dashboard")
-        .classList
-        .add("active");
-
-
-      /*
-        UBAH TOMBOL LOGIN
-      */
-
-      const loginButton =
-        document.getElementById("loginButton");
-
-      loginButton.textContent =
-        "Dashboard";
-
-
-      loginButton.onclick =
-        function() {
-
-          document
-            .getElementById("dashboard")
-            .scrollIntoView({
-              behavior: "smooth"
-            });
-
-        };
-
-
-      /*
-        TUTUP MODAL
-      */
-
-      closeLogin();
-
-
-      /*
-        BERSIHKAN FORM
-      */
-
-      document
-        .getElementById("loginName")
-        .value = "";
-
-      document
-        .getElementById("loginId")
-        .value = "";
-
-      document
-        .getElementById("loginPassword")
-        .value = "";
-
-
-      alert(
-        "Login berhasil! Selamat datang di Traxshop."
-      );
+        return;
 
     }
 
-
-    /*
-      LOGOUT
-    */
-
-    function logout() {
-
-      document
-        .getElementById("dashboard")
-        .classList
-        .remove("active");
-
-
-      const loginButton =
-        document.getElementById("loginButton");
-
-      loginButton.textContent =
-        "Login";
-
-
-      loginButton.onclick =
-        openLogin;
-
-
-      alert(
-        "Kamu sudah logout."
-      );
-
-    }
-
-
-    /*
-      PESAN PRODUK
-    */
-
-    function orderProduct(
-      productName,
-      price
-    ) {
-
-      alert(
-        "Produk: " +
-        productName +
-        "\nHarga: Rp " +
-        price.toLocaleString("id-ID") +
-        "\n\nFitur checkout akan kita buat pada tahap berikutnya."
-      );
-
-    }
-
-
-    /*
-      PENCARIAN PRODUK
-    */
-
-    function searchProducts() {
-
-      const keyword =
-        document
-          .getElementById("searchInput")
-          .value
-          .toLowerCase()
-          .trim();
-
-
-      const products =
-        document.querySelectorAll(
-          ".product"
+    const existing =
+        cart.find(
+            item => item.id === id
         );
 
 
-      products.forEach(
-        function(product) {
+    if(existing){
 
-          const name =
-            product
-              .querySelector(".product-name")
-              .textContent
-              .toLowerCase();
+        if(existing.quantity >= product.stock){
 
+            toast("Jumlah melebihi stok");
 
-          if (
-            name.includes(keyword)
-          ) {
-
-            product.style.display =
-              "";
-
-          } else {
-
-            product.style.display =
-              "none";
-
-          }
+            return;
 
         }
-      );
+
+        existing.quantity++;
+
+    }else{
+
+        cart.push({
+
+            id:id,
+
+            quantity:1
+
+        });
 
     }
 
 
-    /*
-      KLIK DI LUAR MODAL
-      UNTUK MENUTUP LOGIN
-    */
+    saveData();
 
-    window.onclick =
-      function(event) {
+    updateCartCount();
 
-        const modal =
-          document.getElementById(
-            "loginModal"
-          );
+    toast(
+        product.name +
+        " ditambahkan ke keranjang"
+    );
+
+}
 
 
-        if (
-          event.target === modal
-        ) {
+/* =====================================================
+   CART COUNT
+===================================================== */
 
-          closeLogin();
+function updateCartCount(){
 
-        }
+    const total =
+        cart.reduce(
+            (sum,item) =>
+            sum + item.quantity,
+            0
+        );
 
-      };
+    document
+    .getElementById("cartCount")
+    .textContent = total;
 
-  </script>
+}
+
+
+/* =====================================================
+   WISHLIST
+===================================================== */
+
+function toggleWishlist(id){
+
+    const index =
+        wishlist.indexOf(id);
+
+
+    if(index >= 0){
+
+        wishlist.splice(index,1);
+
+        toast("Dihapus dari wishlist");
+
+    }else{
+
+        wishlist.push(id);
+
+        toast("Ditambahkan ke wishlist");
+
+    }
+
+
+    saveData();
+
+    renderProducts();
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+renderProducts();
+
+updateCartCount();
+
+</script>
 
 </body>
-</html>
+  </html>
